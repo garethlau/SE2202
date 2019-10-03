@@ -1,0 +1,152 @@
+/* TASK 1 */
+
+/*
+In order to convert a number from decimal representation to binary representation 
+we repeatedly divide the number by 2, the integer part of the division is kept for 
+the next round while the remainder is appended to the left of the previous reminders 
+to form the binary representation
+*/
+
+const convertDecimalToBinaryLoop = (num) => {   // binding function to "convertDecimalToBinaryLoop"
+    /*
+     * Converts a number to a binary string using
+     * loops
+     */
+    if (num == 0) return "0";                   // check if the num is already zero
+    let s = "";                                 // initialize temporary variable
+    while (num > 0) {                           // loop while the number is greater than 0
+        s = num % 2 + s;                        // add the remainder after division by 2
+        num = Math.floor(num / 2);              // divide the number by 2
+    }
+    return s;                                   // return the decimal string
+}
+
+const convertDecimalToBinaryRecurse = (num) => {    // binding function to "convertDecimalToBinaryRecurse"
+    /*
+     * Converts a number to a binary string using recursion
+     */
+    if (num == 0) return "0";                       // check if the value is already zero
+    let s = "";                                     // initialize temporary variable
+    return _helper(num, s);                         // return helper method's value
+}
+
+const _helper = (num, s) => {                       // binding function to "_helper"
+    /*
+     * Helper method that takes in a num and adds 
+     * the remainder to the string recursively
+     */
+    if (num == 0) return s;                         // base case, if num is 0 then return the string
+    s =  num % 2 + s;                               // add the remainder after division by 2
+    return _helper(Math.floor(num / 2), s);         // return helper method's value passing in num / 2
+}
+
+
+
+const testTask1 = () => {
+    console.log("========== TASK 1 ==========");
+    console.log(convertDecimalToBinaryLoop(57));
+    console.log(convertDecimalToBinaryRecurse(57))
+    for (let i = 1; i <= 20; i++) {                     // loop to test values from 1 to 20
+        // test decimal to binary string using loop
+        console.log("Input: " + i + " Output (loop):      ", convertDecimalToBinaryLoop(i))
+        // test decimal to binary string using recursion
+        console.log("Input: " + i + " Output (recursion): ", convertDecimalToBinaryRecurse(i))
+    }
+}
+
+
+/* TASK 2 */
+/*
+Write a function that takes a string containing a simple JSON object (with 
+only simple valued properties)
+*/
+
+const simpleParser = (s) => {
+    let obj = {}                        // create binding with empty object as return
+    if (s[0] != "{" || s[s.length - 1] != "}") {
+        console.log("The string is not formatted well. Missing closing brackets");
+    }
+    s = s.slice(1, s.length - 1);       // remove opening and closing curly brackets
+                                        // must be reassigned, slice is shallow copy
+    s = s.split(',')                    // split each key-value pair
+    let nested = [];                    // nested array to store array of key, value array
+    s.forEach(p => {                    // loop through key-value pairs
+        p = p.replace(/'/g, "");        // remove ' surrounding key-value pairs
+        p = p.replace(/"/g, "");        // remove " surrounding key-value pairs
+        nested.push(p.split(":"));      // add key-value pairs as array to nested array
+    });                     
+    
+    nested.forEach(pair => {            // loop through each key-value pair in the nested array
+        let key = pair[0];              // bind the key to variable key
+        let val = pair[1];              // bind the value to variable val
+                                        // check if the value is meant to be a number
+        if (!Object.is(Number(val), NaN)) {
+            val = Number(val);          // if it is a number, convert the string to a number
+        }
+        else if (val === "true") {      // check if the value is meant to be a boolean
+            val = true;                 // if it is a boolean, convert the string to a boolean
+        }
+        else if (val === "false") {     // check if the value is meant to be a boolean
+            val = false;                // if it is a boolean, convert the string to a boolean
+        }
+        obj[key] = val;                 // add the key-value pair to the object
+    });
+    return obj;                         // return the object
+}
+
+
+const testTask2 = () => {
+    /*
+    Testing function for task 2
+    */
+    console.log("========== TASK 2 ==========");
+    // create string json
+    let t = '{"type":"human","age":19}';
+    let d = '{"age":10,"nice":true,"name":"doug"}';
+    let c = "{'age':8,'nice':false,'name':'toby'}";
+    // parse json string to json
+    d = simpleParser(d);
+    c = simpleParser(c);
+    t = simpleParser(t);
+    // log objects after parsing
+    console.log(t);
+    console.log(c);
+    console.log(d);
+    // access dog object values
+    console.log(d.age);    
+    console.log(d.nice);
+    console.log(d.name);
+}
+
+/* TASK 3 */
+const arrayThreshold = (threshold, ...arrays) => {
+    for (arr of arrays) {
+        let reachedThreshold = true;
+        for (num of arr) {
+            if (num < threshold) {
+                reachedThreshold = false;
+                break;
+            }
+        }
+        if (reachedThreshold) return arr;
+    }
+}
+
+const testTask3 = () => {
+    /*
+    Testing function for task 3
+    */
+    console.log("========== TASK 3 ==========");    // print start banner
+    let a = [1,2,3,4,5,6,7];                        // test case a
+    let b = [4,5,6,3,8,5];                          // test case b
+    let c = [5,5,5,4,3,6];                          // test case c;
+    console.log(arrayThreshold(3, a, b, c));
+    console.log(...arrayThreshold(3, a, b, c));
+}
+
+testTask1();
+testTask2();
+testTask3();
+
+
+
