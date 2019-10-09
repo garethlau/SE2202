@@ -1,0 +1,58 @@
+const taskOne = () => {
+    let arr = [134, 6, 7, 83, 9, 1, 0, 9, 6, 17, 54, 16];
+
+    // checks whether or not a number is within the range 5 to 10 inclusive
+    const checkDistance = function(num) {
+        return (num >= 5 && num <= 10);
+    }
+    // filter the array based on range
+    let withinRangeFunc = arr.filter(checkDistance);
+    // try using the arrow function
+    let withinRangeArr = arr.filter((num) => {
+        return checkDistance(num);
+    });
+    
+    // converts meters to inches
+    const convertToInches = function(num) {
+        return num * 39.37;
+    }
+    let convertedFunc = arr.map(convertToInches);
+    // try using the arrow function
+    let convertedArr = withinRangeArr.map(num => {
+        return convertToInches(num);
+    });
+
+    // compares and returns the lower of the two values
+    const lowest = function(currentMin, distance) {
+        return Math.min(currentMin, distance);
+    }
+    // reduce the array of numbers to a single value that is the lowest
+    let lowestFun = arr.reduce(lowest);
+    // using the arrow function
+    let lowestArr = arr.reduce((currentMin, distance) => lowest(currentMin, distance));
+
+    // putting all of the higher order functions together
+    let answer = arr.filter(checkDistance).map(convertToInches).reduce(lowest);
+    console.log(answer);
+}
+taskOne();
+
+const taskTwo = () => {
+    let points = [ {x:5, y:6}, {x:3, y:7} , {x:8, y:0}, {x:9, y:10} , {x:15, y:4} , {x:0, y:15} ];
+    // add the square of x and square of y for each of them then return the lowest
+    // 1. we need to filter out any points that sit on the x or y axis
+    // 2. we need to convert the points to distances by summing the square of the x and the square of the y values
+    // 3. we need to reduce the array to just the single largest value representative of the max distance
+    let max = Math.sqrt(points.filter(p =>  p.x != 0 && p.y != 0).map(p => p.x * p.x + p.y * p.y).reduce((maxSoFar, distance) => Math.max(maxSoFar, distance)))
+    console.log(max);
+
+    // not one liner
+    /*
+    let max1 = points.filter(p => (p.x != 0 && p.y != 0));
+    max1 = max1.map(p => p.x * p.x + p.y * p.y);
+    max1 = max1.reduce((maxSoFar, distance) => Math.max(maxSoFar, distance));
+    max1 = Math.sqrt(max1);
+    console.log(max1);
+    */
+}
+taskTwo();
