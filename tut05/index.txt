@@ -50,8 +50,10 @@ const taskTwo = () => {
          */
         this.add = (complexNum) => {
             let {real, imaginary} = complexNum;
-            this.real = this.real + real;
-            this.imaginary = this.imaginary + imaginary;
+            let tempReal = this.real + real;
+            let tempImaginary = this.imaginary + imaginary;
+
+            return new ComplexNumber(tempReal, tempImaginary);
         }
         /**
          * SUBTRACT
@@ -60,8 +62,9 @@ const taskTwo = () => {
          */
         this.subtract = (complexNum) => {
             let {real, imaginary} = complexNum;
-            this.real = this.real - real;
-            this.imaginary = this.imaginary - imaginary;
+            let tempReal = this.real - real;
+            let tempImaginary = this.imaginary - imaginary;
+            return new ComplexNumber(tempReal, tempImaginary);
         }
         /**
          * DIVIDE
@@ -75,8 +78,9 @@ const taskTwo = () => {
             let upstairsReal = this.real * real + this.imaginary * imaginary;
             let upstairsImaginary = this.real * imaginary - this.imaginary * real;
             let downstairs = real * real + imaginary * imaginary;
-            this.real = upstairsReal / downstairs;
-            this.imaginary = upstairsImaginary / downstairs;
+            let tempReal = upstairsReal / downstairs;
+            let tempImaginary = upstairsImaginary / downstairs;
+            return new ComplexNumber(tempReal, tempImaginary);
         }
         /**
          * MULTIPLY
@@ -88,8 +92,7 @@ const taskTwo = () => {
             let {real, imaginary} = complexNum;
             let tempReal = this.real * real - this.imaginary * imaginary;
             let tempImaginary = this.real  * imaginary + this.imaginary * real;
-            this.real = tempReal;
-            this.imaginary = tempImaginary;
+            return new ComplexNumber(tempReal, tempImaginary);
         }
         // Prints the complex number
         this.print = () => {
@@ -107,17 +110,17 @@ const taskTwo = () => {
     let c3 = new ComplexNumber(3, 2);
     let c4 = new ComplexNumber(1, 4);
     // test divide function
-    c1.divide(c2);
-    c1.print();
+    let divResult = c1.divide(c2);
+    divResult.print();
     // test multiply function
-    c3.multiply(c4);
-    c3.print();
+    let mulResult = c3.multiply(c4);
+    mulResult.print();
     // test add function
-    c3.add(c1);
-    c3.print();
+    let addResult = c3.add(c1);
+    addResult.print();
     // test subtract function
-    c3.subtract(c2);
-    c3.print();
+    let subResult = c3.subtract(c2);
+    subResult.print();
 }
 
 taskOne();
