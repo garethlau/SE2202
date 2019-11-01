@@ -79,3 +79,15 @@ iWantToSayHi("Paul");
 
 let iWantToSayBye = letMeTalk("bye");
 iWantToSayBye("Rosa");
+
+const scope = () => {
+    console.log(`The future says ${future()}`);
+    // console.log(`The future future says ${furtherFuture()}`) // furtherFuture not defined
+    function future() {
+        return "nice meme";
+    }
+    const furtherFuture = () => {
+        return "nice mememememmeme";
+    }
+}
+scope();
