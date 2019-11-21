@@ -2,7 +2,7 @@ const utils = require('./utils.js');
 const tests = require('./testCases.js');
 
 // Create list of items
-let items = tests.testFive;
+let items = tests.testOne;
 
 (function main(items) {  
     let months = {
@@ -55,7 +55,7 @@ let items = tests.testFive;
 
     // Log the remaining balance in each month
     for (let key in months) {
-        console.log(`${key} : ${months[key]}`);
+        console.log(`${key} : ${utils.safeAdd(months[key], 0)}`);
     }
 
 })(items)
